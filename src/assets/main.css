@@ -1,0 +1,8 @@
+:root {
+	--var-body-bg:#161a2b;
+	--var-body-fc: #fff;
+	--var-header-bg:#eee;
+}
+body {
+	background-color: #eee;
+}

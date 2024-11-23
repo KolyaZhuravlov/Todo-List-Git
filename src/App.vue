@@ -1,148 +1,148 @@
 <script>
+import Header from './components/icons/Header.vue';
+
 export default {
-	data() {
-		return {
-			newText: '',
-			showList: false,
-			textList: [],
-		}
-	},
-	methods: {
-		addItem() {
-			if(this.newText.trim() !== '') {
-				this.showList = true;
-				this.textList.push({ lable: this.newText, isChecked: false});
-				this.newText = '';
-			}
-		},
-		checkingItems(item) {
-			item.isChecked = !item.isChecked;
-		},
-		removeItem(index) {
-			this.textList.splice(index, 1);
-		} 
-	}
-}
+  components: { Header },
+  data() {
+    return {
+      newText: '',
+      showList: false,
+      textList: [],
+    };
+  },
+  methods: {
+    addItem() {
+      if (this.newText.trim() !== '') {
+        this.showList = true;
+        this.textList.push({ label: this.newText, isChecked: false });  // Исправлено на 'label'
+        this.newText = '';
+      }
+    },
+    checkingItems(item) {
+      item.isChecked = !item.isChecked;
+    },
+    removeItem(index) {
+      this.textList.splice(index, 1);
+    },
+  },
+};
 </script>
 
 <template>
-<div class="container">
- <div class="title">
-	<h1>My To Do List</h1>
-	<div class="input">
-		<input v-model.trim="newText"
-			@keyup.enter="addItem"
-		type="text"
-		 placeholder="type something"
-		 >
-	<v-btn class="btn" icon="plus-box"
-	@click="addItem"
-	:disabled="newText.length == 0"
-	>Add</v-btn>
-	</div>
-	 </div>
-</div>
+  <Header />
+  <div class="container">
+    <input
+      type="text"
+      placeholder="Enter Here..."
+      v-model.trim="newText"
+      @keyup.enter="addItem"
+    />
+    <button
+      class="btn"
+      @click="addItem"
+      :disabled="newText.length === 0"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/>
+      </svg>
+    </button>
+  </div>
 
-<section class="task" v-if="showList">
-      <ul>
-        <li 
-        v-for="(item, index) in textList" 
-        :key="index"
-        @click="checkingItems(item)"
-        :class="{checked: item.isChecked}">
-          <h3>{{item.lable}}</h3> 
-          <button @click="removeItem(index)" class="remove"
-			>x</button>
-        </li>
-      </ul>
-    </section>
+  <section class="task-container" v-if="textList.length > 0">
+    <div v-for="(item, index) in textList" :key="index" class="task">
+      <div class="content">
+        <p>{{ item.label }}</p>
+        <div class="buttons">
+          <button
+			  class="delete"
+			  @click="removeItem(index)">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped>
+/* Центрируем контейнер ввода и кнопку */
 .container {
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-	color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 120px;
 }
-.title {
-	text-align: center;
-	color: white;
-	padding: 20px;
-	border: 1px solid #ccc;
-	border-radius: 8px;
-	background-color: black;
-	box-shadow: 0 4px 8px rgb(0, 0, 0, 0.1);
-	width: 500px;
-	height: 200px;
 
-}
-.input {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
-	align-items: center;
-}
-.input input{
-	padding: 8px;
-	font-size: 16px;
-	border-radius: 4px;
-	border: 1px solid #ccc;
-	color: white;
-}
-.btn{
-	font-size: 14px;
-	margin-left: 10px;
-}
-.btn:hover {
-	transform: scale(1.05);
-}ul{
-  padding: 1rem;
-  display:table;
-  width:100%;
-  box-sizing:border-box;
-  background-color:black;
-  list-style-type: none;
-  border-radius: 1rem;
-}
-ul li{
+/* Стиль для поля ввода */
+.container input {
+  background-color: #e3e3e3;
+  border-radius: 15px;
+  padding: 10px 15px;
+  font-size: 1rem;
   width: 100%;
-  position: relative;
-  cursor: pointer;
-  margin-bottom: 2rem;
-  padding: .7rem .33rem .7rem 2.5rem;
-  background-color: rgb(236, 236, 236);
-  transition: 0.2s;
-  border-radius: 1rem;
-}
-ul li:hover{
-  background-color: rgb(182, 182, 182);
-}
-.checked {
-  text-decoration: line-through;
-  color: rgb(127, 140, 141);
-}
-ul li .remove{
-  position: absolute;
-  color: rgb(116, 116, 116);
-  cursor: pointer;
-  right: 0;
-  top: 0;
-  padding: .7rem 1rem;
-  border: none;
-  padding: 0 1.3rem;
-  height: 100%;
-  border-radius: 0 1rem 1rem 0;
-}
-ul li .remove:hover{
-  color: white;
-  background-color: red;
-}
-.btn[disabled] {
-  background: #8795a1;
+  max-width: 400px; /* Ограничиваем максимальную ширину для поля ввода */
 }
 
-.btn[disabled]:hover {
-  background: #606f7b;
+/* Стиль для кнопки добавления */
+.btn {
+  margin-left: 10px;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Контейнер для задач */
+.task-container {
+  display: flex;
+  flex-direction: column; /* Вертикальное расположение задач */
+  align-items: center;
+  gap: 1rem; /* Отступы между задачами */
+  margin-top: 2rem;
+}
+
+/* Каждая отдельная задача */
+.task {
+  width: 100%;
+  max-width: 700px; /* Ограничиваем максимальную ширину задачи */
+  padding: 15px;
+  background: gray;
+  border-radius: 7px;
+  text-align: center;
+  font-weight: 500;
+  margin: 10px 0; /* Отступы между задачами */
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Кнопка удаления */
+.delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.delete svg {
+  width: 16px;
+  height: 16px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+}
+
+p {
+  margin: 0;
+  font-weight: 500;
 }
 </style>
