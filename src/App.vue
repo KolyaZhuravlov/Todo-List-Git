@@ -8,13 +8,14 @@ export default {
       newText: '',
       showList: false,
       textList: [],
+		isDarkBackground: false
     };
   },
   methods: {
     addItem() {
       if (this.newText.trim() !== '') {
         this.showList = true;
-        this.textList.push({ label: this.newText, isChecked: false });  // Исправлено на 'label'
+        this.textList.push({ label: this.newText, isChecked: false });  
         this.newText = '';
       }
     },
@@ -24,6 +25,7 @@ export default {
     removeItem(index) {
       this.textList.splice(index, 1);
     },
+	
   },
 };
 </script>
@@ -65,7 +67,7 @@ export default {
 </template>
 
 <style scoped>
-/* Центрируем контейнер ввода и кнопку */
+
 .container {
   display: flex;
   justify-content: center;
@@ -81,10 +83,10 @@ export default {
   padding: 10px 15px;
   font-size: 1rem;
   width: 100%;
-  max-width: 400px; /* Ограничиваем максимальную ширину для поля ввода */
+  max-width: 400px;
 }
 
-/* Стиль для кнопки добавления */
+
 .btn {
   margin-left: 10px;
   width: 35px;
@@ -94,27 +96,28 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.5s ease;
 }
 
-/* Контейнер для задач */
 .task-container {
   display: flex;
-  flex-direction: column; /* Вертикальное расположение задач */
+  flex-direction: column; 
   align-items: center;
-  gap: 1rem; /* Отступы между задачами */
+  gap: 1rem; 
   margin-top: 2rem;
+  transition: transform 0.5s ease;
 }
 
-/* Каждая отдельная задача */
+
 .task {
   width: 100%;
-  max-width: 700px; /* Ограничиваем максимальную ширину задачи */
+  max-width: 700px;
   padding: 15px;
   background: gray;
   border-radius: 7px;
   text-align: center;
   font-weight: 500;
-  margin: 10px 0; /* Отступы между задачами */
+  margin: 10px 0; 
 }
 
 .content {
@@ -123,17 +126,22 @@ export default {
   align-items: center;
 }
 
-/* Кнопка удаления */
+
 .delete {
   background: none;
   border: none;
   cursor: pointer;
   padding: 5px;
+  transition: transform 0.5s ease;
 }
 
 .delete svg {
   width: 16px;
   height: 16px;
+}
+
+.delete:hover {
+	transform: scale(1.1)
 }
 
 .buttons {
@@ -144,5 +152,9 @@ export default {
 p {
   margin: 0;
   font-weight: 500;
+}
+.btn:hover {
+	transform: scale(1.1);
+	cursor: pointer;
 }
 </style>
